@@ -1,1 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Dunya International Supermarket</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary: #059669;
+            --primary-dark: #047857;
+            --secondary: #10B981;
+            --bg-light: #F9FAFB;
+            --text-dark: #111827;
+            --text-muted: #6B7280;
+            --white: #FFFFFF;
+            --border: #E5E7EB;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --radius: 20px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg-light); color: var(--text-dark); line-height: 1.6; overflow-x: hidden; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        img { max-width: 100%; height: auto; display: block; }
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+
+        /* Navbar */
+        .navbar { position: sticky; top: 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); z-index: 1000; box-shadow: var(--shadow-sm); padding: 16px 0; border-bottom: 1px solid var(--border); }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 24px; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 8px; letter-spacing: -0.5px; }
+        .nav-links { display: flex; gap: 32px; align-items: center; }
+        .nav-links a { font-weight: 500; color: var(--text-dark); transition: var(--transition); font-size: 15px; }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+        .nav-actions { display: flex; gap: 20px; align-items: center; }
+        .mobile-menu-btn { display: none; background: none; border: none; cursor: pointer; color: var(--text-dark); }
+
+        /* Hero Section */
+        .about-hero { background: linear-gradient(135deg, #111827 0%, #1f2937 100%); padding: 100px 0; color: var(--white); text-align: center; }
+        .about-hero h1 { font-size: 56px; font-weight: 800; margin-bottom: 24px; letter-spacing: -1px; }
+        .about-hero p { font-size: 20px; opacity: 0.8; max-width: 700px; margin: 0 auto; }
+
+        /* Story Section */
+        .story-section { padding: 100px 0; background: var(--white); }
+        .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+        .story-content h2 { font-size: 40px; font-weight: 800; margin-bottom: 24px; color: var(--text-dark); line-height: 1.2; }
+        .story-content p { font-size: 18px; color: var(--text-muted); margin-bottom: 20px; }
+        .story-image { position: relative; }
+        .story-image img { border-radius: var(--radius); shadow: var(--shadow-lg); }
+        .experience-badge { position: absolute; bottom: -30px; left: -30px; background: var(--primary); color: var(--white); padding: 32px; border-radius: var(--radius); box-shadow: var(--shadow-lg); }
+        .experience-badge .number { font-size: 48px; font-weight: 800; display: block; line-height: 1; }
+        .experience-badge .text { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Values Section */
+        .values-section { padding: 100px 0; background: var(--bg-light); }
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-header h2 { font-size: 36px; font-weight: 800; margin-bottom: 16px; }
+        .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+        .value-card { background: var(--white); padding: 48px; border-radius: var(--radius); border: 1px solid var(--border); transition: var(--transition); text-align: center; }
+        .value-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-lg); border-color: transparent; }
+        .value-icon { width: 64px; height: 64px; background: rgba(5, 150, 105, 0.1); color: var(--primary); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; }
+        .value-card h3 { font-size: 22px; font-weight: 700; margin-bottom: 16px; }
+        .value-card p { color: var(--text-muted); }
+
+        /* Team/Community Section */
+        .community-section { padding: 100px 0; background: var(--white); }
+        .community-banner { background: #111827; border-radius: 32px; overflow: hidden; display: flex; align-items: center; color: var(--white); }
+        .community-content { flex: 1; padding: 80px; }
+        .community-image { flex: 1; align-self: stretch; }
+        .community-image img { width: 100%; height: 100%; object-fit: cover; }
+        .community-content h2 { font-size: 36px; font-weight: 800; margin-bottom: 24px; }
+        .community-content p { font-size: 18px; opacity: 0.8; margin-bottom: 32px; }
+
+        /* Footer */
+        .footer { background: #111827; color: var(--white); padding: 80px 0 32px; border-top: 5px solid var(--primary); margin-top: 60px; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 64px; margin-bottom: 64px; }
+        .footer-brand p { color: #9CA3AF; margin-top: 20px; max-width: 300px; }
+        .footer-col h4 { font-size: 18px; margin-bottom: 24px; color: var(--white); }
+        .footer-col a { display: block; color: #9CA3AF; margin-bottom: 12px; transition: var(--transition); }
+        .footer-col a:hover { color: var(--primary); padding-left: 5px; }
+        .footer-bottom { text-align: center; padding-top: 32px; border-top: 1px solid #374151; color: #6B7280; font-size: 14px; }
+
+        @media (max-width: 1024px) {
+            .story-grid { grid-template-columns: 1fr; gap: 60px; }
+            .values-grid { grid-template-columns: 1fr 1fr; }
+            .community-banner { flex-direction: column; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: block; }
+            .about-hero h1 { font-size: 40px; }
+            .values-grid { grid-template-columns: 1fr; }
+            .community-content { padding: 40px; }
+            .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i data-lucide="shopping-basket"></i> Dunya
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="shop.html">Shop</a>
+                <a href="categories.html">Categories</a>
+                <a href="about.html" class="active">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <a href="#"><i data-lucide="search"></i></a>
+                <a href="#"><i data-lucide="user"></i></a>
+                <button class="mobile-menu-btn"><i data-lucide="menu"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="about-hero">
+        <div class="container">
+            <h1>Our Story, Your Flavors</h1>
+            <p>Bringing the finest international ingredients and authentic tastes from around the world to the heart of the Netherlands.</p>
+        </div>
+    </section>
+
+    <!-- Story -->
+    <section class="story-section">
+        <div class="container">
+            <div class="story-grid">
+                <div class="story-image">
+                    <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=800" alt="Supermarket Interior">
+                    <div class="experience-badge">
+                        <span class="number">15+</span>
+                        <span class="text">Years of Quality</span>
+                    </div>
+                </div>
+                <div class="story-content">
+                    <h2>Rooted in Heritage, Dedicated to Quality</h2>
+                    <p>Dunya International Supermarket began with a simple mission: to provide our community in Nijmegen with the authentic flavors they grew up with, while introducing new, exotic tastes to local food enthusiasts.</p>
+                    <p>What started as a small family-owned corner shop has grown into a premier destination for international groceries, fresh halal meats, and specialty imports from the Middle East, Asia, and Mediterranean regions.</p>
+                    <p>We believe that food is the universal language of connection. Every product on our shelves is hand-selected for its quality and authenticity, ensuring you get the best experience in every bite.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values -->
+    <section class="values-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Choose Dunya?</h2>
+                <p>Our commitment to excellence drives everything we do.</p>
+            </div>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon"><i data-lucide="shield-check"></i></div>
+                    <h3>Quality First</h3>
+                    <p>We partner directly with trusted suppliers to ensure every item meets our rigorous standards for freshness and authenticity.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon"><i data-lucide="globe"></i></div>
+                    <h3>Global Variety</h3>
+                    <p>Discover rare spices, traditional snacks, and specialty grains that you won't find in standard local supermarkets.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon"><i data-lucide="users"></i></div>
+                    <h3>Community Centric</h3>
+                    <p>We aren't just a store; we're a hub for the community. Our friendly staff is always here to help you find that "taste of home."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Banner -->
+    <section class="community-section">
+        <div class="container">
+            <div class="community-banner">
+                <div class="community-content">
+                    <h2>More Than Just a Supermarket</h2>
+                    <p>From our fresh bakery section to our custom butcher services, we strive to provide a shopping experience that feels personal. We invite you to visit us in person at Couwenbergstraat to see what makes Dunya special.</p>
+                    <a href="contact.html" class="btn" style="background: var(--primary); color: white; padding: 16px 32px; border-radius: 12px; display: inline-flex; align-items: center; gap: 10px; font-weight: 600;">
+                        Visit Our Store <i data-lucide="map-pin"></i>
+                    </a>
+                </div>
+                <div class="community-image">
+                    <img src="https://images.unsplash.com/photo-1578916171728-46686eac8d58?auto=format&fit=crop&q=80&w=800" alt="Fresh Produce">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo" style="color: var(--white);">
+                        <i data-lucide="shopping-basket"></i> Dunya
+                    </a>
+                    <p>Your premium international supermarket bringing the world's finest flavors directly to your table in the Netherlands.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <a href="index.html">Home</a>
+                    <a href="shop.html">Shop Online</a>
+                    <a href="categories.html">Categories</a>
+                    <a href="about.html">About Us</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Customer Care</h4>
+                    <a href="contact.html">Contact Us</a>
+                    <a href="#">Shipping Policy</a>
+                    <a href="#">Terms & Conditions</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Info</h4>
+                    <p><i data-lucide="map-pin" style="width: 16px;"></i> Couwenbergstraat 115, Nijmegen</p>
+                    <p><i data-lucide="phone" style="width: 16px;"></i> +31 243 555 339</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2026 Dunya International Supermarket. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
