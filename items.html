@@ -114,15 +114,20 @@
         html.light .glass-nav { background: rgba(255, 255, 255, 0.9); border-bottom: 1px solid rgba(0,0,0,0.08); }
         
         /* Fix Text Visibility */
-        html.light .text-white, html.light h1, html.light h2, html.light h3, html.light .flex-col span { 
+        html.light .text-white:not(.glass-button *),
+        html.light .text-gray-100, html.light .text-gray-200, html.light .text-gray-300,
+        html.light h1, html.light h2, html.light h3, html.light h4,
+        html.light .flex-col span {
             color: #000000 !important; 
         }
         html.light .text-gray-300, html.light .text-gray-400 { color: #000000 !important; }
+        html.light .text-gray-500 { color: #4a5568 !important; } /* Ensure gray text is visible in light mode */
         html.light .bg-white\/10, html.light .bg-white\/5 { background-color: rgba(0,0,0,0.05) !important; }
         html.light .border-white\/10, html.light .border-white\/5 { border-color: rgba(0,0,0,0.1) !important; }
         
         /* Keep green accents */
         html.light .bg-dunya-main { background-color: #16a34a; }
+        html.light .text-dunya-light { color: #16a34a !important; } /* Ensure dunya-light is visible */
         html.light .category-pill:not(.active) { 
             background: #ffffff !important; 
             color: #000000 !important; 
@@ -153,8 +158,16 @@
         }
         html.light .theme-switch-container { background: rgba(0, 0, 0, 0.05); border-color: rgba(0, 0, 0, 0.05); }
         html.light .theme-switch-handle { transform: translateX(24px); }
+        html.light .theme-switch-container i.fa-moon { color: #4a5568 !important; } /* Darken moon icon */
+        html.light .theme-switch-container i.fa-sun { color: #16a34a !important; } /* Brighten sun icon */
 
+        .lang-active { color: #4ade80; font-weight: bold; }
+        html.light .lang-option:hover { background-color: rgba(0,0,0,0.05); }
         /* Bulk Service Banner Style */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         #bulk-banner {
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -257,14 +270,25 @@
         </div>
     </header>
 
+    <!-- Search Bar -->
+    <div class="max-w-7xl mx-auto px-6 mb-8 reveal active">
+        <div class="max-w-md mx-auto relative group">
+            <input type="text" id="product-search" data-i18n-placeholder="search_placeholder" placeholder="Search products..." 
+                   class="w-full glass-panel py-3 px-12 rounded-full focus:outline-none focus:ring-2 focus:ring-dunya-main/50 transition-all text-sm"
+                   oninput="handleSearch()">
+            <i class="fa-solid fa-magnifying-glass absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-dunya-light transition-colors"></i>
+        </div>
+    </div>
+
     <!-- Filters -->
     <section class="pb-12 px-6 sticky top-[73px] z-30">
         <div class="max-w-7xl mx-auto flex overflow-x-auto gap-4 pb-4 no-scrollbar justify-center">
-            <button class="category-pill active glass-panel px-6 py-2.5 rounded-full whitespace-nowrap text-sm font-medium" onclick="filterCategory('all')" data-i18n="cat_all">All Items</button>
-            <button class="category-pill glass-panel px-6 py-2.5 rounded-full whitespace-nowrap text-sm font-medium" onclick="filterCategory('butcher')" data-i18n="cat_meat">Butcher</button>
-            <button class="category-pill glass-panel px-6 py-2.5 rounded-full whitespace-nowrap text-sm font-medium" onclick="filterCategory('bakery')" data-i18n="cat_bakery">Bakery</button>
-            <button class="category-pill glass-panel px-6 py-2.5 rounded-full whitespace-nowrap text-sm font-medium" onclick="filterCategory('dairy')" data-i18n="cat_dairy">Dairy & Cheese</button>
-            <button class="category-pill glass-panel px-6 py-2.5 rounded-full whitespace-nowrap text-sm font-medium" onclick="filterCategory('grocery')" data-i18n="cat_grocery">Grocery</button>
+            <button class="category-pill active glass-panel px-6 py-2.5 rounded-full whitespace-nowrap text-sm font-medium" onclick="filterCategory(event, 'all')" data-i18n="cat_all">All Items</button>
+            <button class="category-pill glass-panel px-6 py-2.5 rounded-full whitespace-nowrap text-sm font-medium" onclick="filterCategory(event, 'butcher')" data-i18n="cat_meat">Butcher</button>
+            <button class="category-pill glass-panel px-6 py-2.5 rounded-full whitespace-nowrap text-sm font-medium" onclick="filterCategory(event, 'bakery')" data-i18n="cat_bakery">Bakery</button>
+            <button class="category-pill glass-panel px-6 py-2.5 rounded-full whitespace-nowrap text-sm font-medium" onclick="filterCategory(event, 'dairy')" data-i18n="cat_dairy">Dairy & Cheese</button>
+            <button class="category-pill glass-panel px-6 py-2.5 rounded-full whitespace-nowrap text-sm font-medium" onclick="filterCategory(event, 'grocery')" data-i18n="cat_grocery">Grocery</button>
+            <button class="category-pill glass-panel px-6 py-2.5 rounded-full whitespace-nowrap text-sm font-medium" onclick="filterCategory(event, 'baklava')" data-i18n="cat_baklava">Baklava</button>
         </div>
     </section>
 
@@ -360,53 +384,68 @@
             en: {
                 nav_home: "Home", nav_products: "Products", nav_about: "About Us",
                 page_title: "International Selection", page_subtitle: "Excellence in every aisle. Discover premium cuts, traditional bakes, and world-class spices.",
-                cat_all: "All Items", cat_meat: "Butcher", cat_bakery: "Bakery", cat_dairy: "Dairy & Cheese", cat_grocery: "Grocery",
+                cat_all: "All Items", cat_meat: "Butcher", cat_bakery: "Bakery", cat_dairy: "Dairy & Cheese", cat_grocery: "Grocery", cat_baklava: "Baklava",
                 footer_desc: "Bringing the flavors of the world to your doorstep. Your trusted partner for quality groceries.",
                 footer_links: "Quick Links", footer_contact: "Location", footer_rights: "© 2024 Dunya Supermarket. All rights reserved.",
-                bulk_service_desc: "Ordering for 2+ weeks? Avoid the search! WhatsApp your list. Just pick up and pay. No advanced payment required."
+                bulk_service_desc: "Ordering for 2+ weeks? Avoid the search! WhatsApp your list. Just pick up and pay. No advanced payment required.", // Added for consistency
+                search_placeholder: "Search products...", no_results: "No products found matching your search."
             },
             nl: {
                 nav_home: "Startpagina", nav_products: "Producten", nav_about: "Over Ons",
                 page_title: "Internationale Selectie", page_subtitle: "Uitmuntendheid in elk gangpad. Ontdek kwaliteitsvlees en vers gebak.",
-                cat_all: "Alles", cat_meat: "Slagerij", cat_bakery: "Bakkerij", cat_dairy: "Zuivel", cat_grocery: "Supermarkt",
+                cat_all: "Alles", cat_meat: "Slagerij", cat_bakery: "Bakkerij", cat_dairy: "Zuivel", cat_grocery: "Supermarkt", cat_baklava: "Baklava",
                 footer_desc: "De smaken van de wereld bij u thuis. Uw partner voor kwaliteitsproducten.", footer_links: "Snelkoppelingen", footer_contact: "Locatie", footer_rights: "© 2024 Dunya Supermarket. Alle rechten voorbehouden.",
-                bulk_service_desc: "Boodschappen voor 2+ weken? Bestel via WhatsApp! Wij pakken het in, u haalt het op. Geen aanbetaling nodig."
+                bulk_service_desc: "Boodschappen voor 2+ weken? Bestel via WhatsApp! Wij pakken het in, u haalt het op. Geen aanbetaling nodig.", // Added
+                search_placeholder: "Zoek producten...", // Added
+                no_results: "Geen producten gevonden die overeenkomen met uw zoekopdracht." // Added
             },
             tr: {
                 nav_home: "Anasayfa", nav_products: "Ürünler", nav_about: "Hakkımızda",
-                page_title: "Uluslararası Seçki", page_subtitle: "Her reyonumuzda mükemmellik. Taze etler ve geleneksel lezzetler.", cat_all: "Hepsi", cat_meat: "Kasap", cat_bakery: "Fırın", cat_dairy: "Şarküteri", cat_grocery: "Market",
+                page_title: "Uluslararası Seçki", page_subtitle: "Her reyonumuzda mükemmellik. Taze etler ve geleneksel lezzetler.", cat_all: "Hepsi", cat_meat: "Kasap", cat_bakery: "Fırın", cat_dairy: "Şarküteri", cat_grocery: "Market", cat_baklava: "Baklava",
                 footer_desc: "Dünyanın lezzetlerini kapınıza getiriyoruz. Kaliteli alışverişteki güvenilir ortağınız.", footer_links: "Hızlı Linkler", footer_contact: "Konum", footer_rights: "© 2024 Dunya Süpermarket. Tüm hakları saklıdır.",
-                bulk_service_desc: "2+ haftalık alışveriş mi? WhatsApp'tan listenizi atın, biz hazırlayalım. Kapıda ödeme, ön ödeme yok!"
+                bulk_service_desc: "2+ haftalık alışveriş mi? WhatsApp'tan listenizi atın, biz hazırlayalım. Kapıda ödeme, ön ödeme yok!", // Present, but ensuring consistency
+                search_placeholder: "Ürün ara...", // Added
+                no_results: "Aradığınız ürün bulunamadı." // Added
             },
             ku: {
                 nav_home: "Sereke", nav_products: "Berhem", nav_about: "Derheqê Me",
-                page_title: "Berhemên Cîhanî", page_subtitle: "Di her beşê de kalîte. Goştê qenc û nanê taze li benda we ye.", cat_all: "Hemû", cat_meat: "Qesab", cat_bakery: "Nanpêjgeh", cat_dairy: "Şîr û Penêr", cat_grocery: "Bazar",
+                page_title: "Berhemên Cîhanî", page_subtitle: "Di her beşê de kalîte. Goştê qenc û nanê taze li benda we ye.", cat_all: "Hemû", cat_meat: "Qesab", cat_bakery: "Nanpêjgeh", cat_dairy: "Şîr û Penêr", cat_grocery: "Bazar", cat_baklava: "Baklava",
                 footer_desc: "Tehmên dinyayê li ber deriyê we ne. Hevparê we yê bawerbar ji bo kalîteyê.", footer_links: "Lînkên Bilez", footer_contact: "Cîh", footer_rights: "© 2024 Dunya. Maf parastî ne.",
-                bulk_service_desc: "Ji bo 2+ hefteyan kirîn? Bi WhatsAppê lîsteya xwe bişînin. Werin û bidin, pêşekî tune!"
+                bulk_service_desc: "Ji bo 2+ hefteyan kirîn? Bi WhatsAppê lîsteya xwe bişînin. Werin û bidin, pêşekî tune!", // Added
+                search_placeholder: "Berheman bigere...", // Added
+                no_results: "Tu berhem nehatin dîtin." // Added
             },
             es: {
                 nav_home: "Inicio", nav_products: "Productos", nav_about: "Nosotros",
-                page_title: "Selección Internacional", page_subtitle: "Excelencia en cada pasillo. Carnes de calidad y panadería artesana.", cat_all: "Todo", cat_meat: "Carnicería", cat_bakery: "Panadería", cat_dairy: "Lácteos", cat_grocery: "Abarrotes",
+                page_title: "Selección Internacional", page_subtitle: "Excelencia en cada pasillo. Carnes de calidad y panadería artesana.", cat_all: "Todo", cat_meat: "Carnicería", cat_bakery: "Panadería", cat_dairy: "Lácteos", cat_grocery: "Abarrotes", cat_baklava: "Baklava",
                 footer_desc: "Sabores del mundo en su hogar. Calidad y confianza familiar.", footer_links: "Enlaces Rápidos", footer_contact: "Ubicación", footer_rights: "© 2024 Dunya. Todos los derechos reservados.",
-                bulk_service_desc: "¿Compra para 2+ semanas? Pida por WhatsApp. Nosotros lo preparamos, usted solo paga al recoger. Sin adelantos."
+                bulk_service_desc: "¿Compra para 2+ semanas? Pida por WhatsApp. Nosotros lo preparamos, usted solo paga al recoger. Sin adelantos.", // Added
+                search_placeholder: "Buscar productos...", // Added
+                no_results: "No se encontraron productos que coincidan con su búsqueda." // Added
             },
             ar: {
                 nav_home: "الرئيسية", nav_products: "المنتجات", nav_about: "من نحن",
-                page_title: "مجموعة عالمية", page_subtitle: "التميز في كل قسم. اكتشف أجود اللحوم والمخبوزات التقليدية.", cat_all: "الكل", cat_meat: "اللحوم", cat_bakery: "المخبوزات", cat_dairy: "الألبان", cat_grocery: "البقالة",
+                page_title: "مجموعة عالمية", page_subtitle: "التميز في كل قسم. اكتشف أجود اللحوم والمخبوزات التقليدية.", cat_all: "الكل", cat_meat: "اللحوم", cat_bakery: "المخبوزات", cat_dairy: "الألبان", cat_grocery: "البقالة", cat_baklava: "بقلاوة",
                 footer_desc: "نأتي بنكهات العالم إلى باب منزلك. شريكك الموثوق للجودة.", footer_links: "روابط سريعة", footer_contact: "الموقع", footer_rights: "© 2024 دنيا سوبر ماركت. جميع الحقوق محفوظة.",
-                bulk_service_desc: "طلب لـ اسبوعين أو أكثر؟ أرسل قائمتك عبر الواتساب. نجهزها لك وتدفع عند الاستلام. لا يشترط الدفع المسبق."
+                bulk_service_desc: "طلب لـ اسبوعين أو أكثر؟ أرسل قائمتك عبر الواتساب. نجهزها لك وتدفع عند الاستلام. لا يشترط الدفع المسبق.", // Added
+                search_placeholder: "ابحث عن المنتجات...", // Added
+                no_results: "لم يتم العثور على منتجات مطابقة لبحثك." // Added
             },
             fr: {
                 nav_home: "Accueil", nav_products: "Produits", nav_about: "À Propos",
-                page_title: "Sélection Internationale", page_subtitle: "L'excellence dans chaque rayon. Découvrez nos viandes et pains artisanaux.", cat_all: "Tout", cat_meat: "Boucherie", cat_bakery: "Boulangerie", cat_dairy: "Laitage", cat_grocery: "Épicerie",
+                page_title: "Sélection Internationale", page_subtitle: "L'excellence dans chaque rayon. Découvrez nos viandes et pains artisanaux.", cat_all: "Tout", cat_meat: "Boucherie", cat_bakery: "Boulangerie", cat_dairy: "Laitage", cat_grocery: "Épicerie", cat_baklava: "Baklava",
                 footer_desc: "Les saveurs du monde à votre porte. Votre partenaire de confiance.", footer_links: "Liens Rapides", footer_contact: "Localisation", footer_rights: "© 2024 Dunya. Tous droits réservés.",
-                bulk_service_desc: "Courses pour 2+ semaines? Commandez via WhatsApp! On prépare tout, vous payez au retrait. Aucun acompte requis."
+                bulk_service_desc: "Courses pour 2+ semaines? Commandez via WhatsApp! On prépare tout, vous payez au retrait. Aucun acompte requis.",
+                search_placeholder: "Rechercher des produits...",
+                no_results: "Aucun produit trouvé correspondant à votre recherche."
             },
             zz: {
                 nav_home: "Keye", nav_products: "Malun", nav_about: "Ma ser",
-                page_title: "Sûka Dinya", page_subtitle: "Her ca de kalîte. Goştê weş û nanê taze dermanê şıma yo.", cat_all: "Pêro", cat_meat: "Qesab", cat_bakery: "Fırın", cat_dairy: "Şıt û Penir", cat_grocery: "Markete",
+                page_title: "Sûka Dinya", page_subtitle: "Her ca de kalîte. Goştê weş û nanê taze dermanê şıma yo.", cat_all: "Pêro", cat_meat: "Qesab", cat_bakery: "Fırın", cat_dairy: "Şıt û Penir", cat_grocery: "Markete", cat_baklava: "Baklava",
                 footer_desc: "Tehmê dinya kapiyê şıma de yo. İtibarê şıma yo herdemi.", footer_links: "Lînkê Leze", footer_contact: "Ca", footer_rights: "© 2024 Dunya. Heqî amê pawıtene.",
-                bulk_service_desc: "2+ heftan rê market? WhatsApp ra bınusên. Ma amade kenîme, şıma teyna bıpayerê. Verpê dînayîş çînyo."
+                bulk_service_desc: "2+ heftan rê market? WhatsApp ra bınusên. Ma amade kenîme, şıma teyna bıpayerê. Verpê dînayîş çînyo.", // Added
+                search_placeholder: "Berheman biger...", // Added
+                no_results: "Cîyayîşê şıma rê çîyêk nêame dîtin." // Added
             }
         };
 
@@ -421,11 +460,20 @@
             
             // Bakery
             { name: "Fresh Turkish Simit", cat: "bakery", img: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?q=80&w=800&auto=format&fit=crop" },
-            { name: "Handmade Baklava", cat: "bakery", img: "https://images.unsplash.com/photo-1519676867240-f03562e64548?q=80&w=800&auto=format&fit=crop" },
             { name: "Artisan Sourdough", cat: "bakery", img: "https://images.unsplash.com/photo-1585478259715-876a6a81fc08?q=80&w=800&auto=format&fit=crop" },
             { name: "Warm Pita Bread", cat: "bakery", img: "https://images.unsplash.com/photo-1610440042657-6dd2c4b03e1c?q=80&w=800&auto=format&fit=crop" },
             { name: "Almond Croissants", cat: "bakery", img: "https://images.unsplash.com/photo-1530610476181-d83430b64dcd?q=80&w=800&auto=format&fit=crop" },
             { name: "Olive & Cheese Pide", cat: "bakery", img: "https://images.unsplash.com/photo-1593246038160-e7427cb923ff?q=80&w=800&auto=format&fit=crop" },
+
+            // Baklava
+            { name: "Pistachio Baklava", cat: "baklava", img: "https://images.unsplash.com/photo-1519676867240-f03562e64548?q=80&w=800&auto=format&fit=crop" },
+            { name: "Walnut Baklava", cat: "baklava", img: "https://images.unsplash.com/photo-1589620588698-c11cc28f6454?q=80&w=800&auto=format&fit=crop" },
+            { name: "Cashew Baklava", cat: "baklava", img: "https://images.unsplash.com/photo-1632149106681-a056036f52e7?q=80&w=800&auto=format&fit=crop" },
+            { name: "Mixed Nut Baklava", cat: "baklava", img: "https://images.unsplash.com/photo-1568162603664-fcd658421851?q=80&w=800&auto=format&fit=crop" },
+            { name: "Chocolate Baklava", cat: "baklava", img: "https://images.unsplash.com/photo-1605460375648-278bcbd579a6?q=80&w=800&auto=format&fit=crop" },
+            { name: "Shredded Kadayif", cat: "baklava", img: "https://images.unsplash.com/photo-1514517220017-8ce97a34a7b6?q=80&w=800&auto=format&fit=crop" },
+            { name: "Rolled Sarma Baklava", cat: "baklava", img: "https://images.unsplash.com/photo-1599743108618-717f5d4741b8?q=80&w=800&auto=format&fit=crop" },
+            { name: "Burma Baklava", cat: "baklava", img: "https://images.unsplash.com/photo-1534513997188-0239e40a4445?q=80&w=800&auto=format&fit=crop" },
 
             // Dairy
             { name: "Aged Balkan Feta", cat: "dairy", img: "https://images.unsplash.com/photo-1559561853-08451507cbe7?q=80&w=800&auto=format&fit=crop" },
@@ -447,21 +495,32 @@
             { name: "Tahini Spread", cat: "grocery", img: "https://images.unsplash.com/photo-1510629954389-c1e0da47d4ec?q=80&w=800&auto=format&fit=crop" },
             { name: "Organic Walnuts", cat: "grocery", img: "https://images.unsplash.com/photo-1526947425960-945c6e72858f?q=80&w=800&auto=format&fit=crop" },
             { name: "Turkish Coffee Beans", cat: "grocery", img: "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?q=80&w=800&auto=format&fit=crop" },
-            { name: "Green Castelvetrano Olives", cat: "grocery", img: "https://media.istockphoto.com/id/1187843134/photo/castelvetrano-sweet-green-olives.jpg?s=612x612&w=0&k=20&c=CCSlaYT1yVHLFn9pE1n27uuY39RW9bVU-ZX7n-7To0w=?q=80&w=800&auto=format&fit=crop" },
+            { name: "Green Castelvetrano Olives", cat: "grocery", img: "https://media.istockphoto.com/id/1187843134/photo/castelvetrano-sweet-green-olives.jpg?s=612x612&w=0&k=20&c=CCSlaYT1yVHLFn9pE1n27uuY39RW9bVU-ZX7n-7To0w=&q=80&w=800&auto=format&fit=crop" },
             { name: "Dried Figs", cat: "grocery", img: "https://images.unsplash.com/photo-1605647540924-852296657db4?q=80&w=800&auto=format&fit=crop" },
             { name: "Basmati Rice 5kg", cat: "grocery", img: "https://images.unsplash.com/photo-1590005354167-6da97870c921?q=80&w=800&auto=format&fit=crop" }
         ];
 
         const productGrid = document.getElementById('product-grid');
+        let currentCategory = 'all';
+        let searchQuery = '';
         
         function displayProducts(filtered) {
             if (!productGrid) return;
             productGrid.innerHTML = '';
+            
+            if (filtered.length === 0) {
+                productGrid.innerHTML = `
+                    <div class="col-span-full py-20 text-center opacity-60">
+                        <i class="fa-solid fa-box-open text-4xl mb-4"></i>
+                        <p data-i18n="no_results">${translations[localStorage.getItem('dunya-language') || 'en'].no_results || 'No items found.'}</p>
+                    </div>
+                `;
+                return;
+            }
+
             filtered.forEach((p, index) => {
                 const card = document.createElement('div');
-                // Re-enforcing light mode styles for newly injected elements
-                const isLight = document.documentElement.classList.contains('light');
-                card.className = `product-card glass-panel rounded-[2.5rem] overflow-hidden p-5 flex flex-col items-center text-center`;
+                card.className = `product-card glass-panel rounded-[2.5rem] overflow-hidden p-5 flex flex-col items-center text-center reveal active`;
                 card.style.animation = `fadeInUp 0.6s ease forwards ${index * 0.05}s`;
                 card.style.opacity = '0';
                 card.innerHTML = `
@@ -480,14 +539,26 @@
             });
         }
 
-        window.filterCategory = function(cat) {
+        function updateGrid() {
+            let filtered = (currentCategory === 'all') ? products : products.filter(p => p.cat === currentCategory);
+            if (searchQuery) {
+                filtered = filtered.filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()));
+            }
+            displayProducts(filtered);
+        }
+
+        window.filterCategory = function(e, cat) {
             document.querySelectorAll('.category-pill').forEach(btn => btn.classList.remove('active'));
-            const currentBtn = event.currentTarget;
-            currentBtn.classList.add('active');
-            
-            const results = (cat === 'all') ? products : products.filter(p => p.cat === cat);
-            displayProducts(results);
+            e.currentTarget.classList.add('active');
+            currentCategory = cat;
+            updateGrid();
         };
+
+        window.handleSearch = function() {
+            const searchInput = document.getElementById('product-search');
+            searchQuery = searchInput.value;
+            updateGrid();
+        }
 
         const langBtn = document.getElementById('lang-btn');
         const langDropdown = document.getElementById('lang-dropdown');
@@ -518,7 +589,19 @@
                 const key = el.getAttribute('data-i18n');
                 if(translations[langCode] && translations[langCode][key]) {
                     // Auto-style "Halal" and add icon
-                    el.innerHTML = translations[langCode][key].replace(/(Halal|Helal|حلال)/gi, '<span class="text-dunya-light inline-flex items-center gap-1 font-bold"><i class="fa-solid fa-certificate text-[10px]"></i> $1</span>');
+                    const styledText = translations[langCode][key].replace(/(Halal|Helal|حلال)/gi, '<span class="text-dunya-light inline-flex items-center gap-1 font-bold"><i class="fa-solid fa-certificate text-[10px]"></i> $1</span>');
+                    el.style.opacity = '0'; // Add fade animation for consistency with index.html
+                    setTimeout(() => {
+                        el.innerHTML = styledText;
+                        el.style.opacity = '1';
+                    }, 200);
+                }
+            });
+
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if(translations[langCode] && translations[langCode][key]) {
+                    el.placeholder = translations[langCode][key];
                 }
             });
 
@@ -530,6 +613,7 @@
                 } else {
                     el.classList.remove('lang-active');
                 }
+                // No need for else if(itemLang) as in index.html, as all lang-options have data-lang
             });
 
             // Close dropdown after selection
@@ -579,11 +663,5 @@
         });
     </script>
 
-    <style>
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
 </body>
 </html>
