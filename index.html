@@ -184,10 +184,10 @@
             color: #0f172a; /* Ensure dark text */
         }
         html.light .glass-nav { 
-            background: #ffffff !important; /* Solid white for initial nav */
-            border-bottom: 1px solid rgba(0,0,0,0.1); 
-            backdrop-filter: none; /* Remove blur for solid nav */
-            -webkit-backdrop-filter: none;
+            background: rgba(255, 255, 255, 0.8) !important;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
         }
         
         /* Enhanced Text Visibility */
@@ -224,6 +224,14 @@
 
         html.light .theme-switch-handle { transform: translateX(24px); }
         html.light .lang-option:hover { background-color: rgba(0,0,0,0.05); }
+
+        /* Mobile Menu Glass Fix */
+        #mobile-menu {
+            backdrop-filter: blur(200px) saturate(210%) !important;
+            -webkit-backdrop-filter: blur(200px) saturate(210%) !important;
+            background: rgba(10, 15, 13, 0.92) !important;
+        }
+        html.light #mobile-menu { background: rgba(255, 255, 255, 0.88) !important; }
 
         /* Bulk Service Banner Style */
         #bulk-banner {
@@ -305,13 +313,13 @@
             </div>
 
             <!-- Mobile Menu Button -->
-            <button class="md:hidden text-white text-2xl z-50 focus:outline-none" id="mobile-btn">
+        <button class="md:hidden text-white text-2xl z-[110] focus:outline-none" id="mobile-btn">
                 <i class="fa-solid fa-bars"></i>
             </button>
         </div>
 
         <!-- Mobile Menu Overlay -->
-        <div id="mobile-menu" class="fixed inset-0 glass-nav h-screen flex-col items-center justify-center gap-8 opacity-0 pointer-events-none transition-opacity duration-300 hidden md:hidden z-40">
+    <div id="mobile-menu" class="fixed inset-0 h-screen flex-col items-center justify-center gap-8 opacity-0 pointer-events-none transition-opacity duration-300 hidden md:hidden z-[100]">
             <a href="index.html" class="text-2xl font-bold text-white" data-i18n="nav_home">Home</a>
             <a href="items.html" class="text-2xl font-bold text-gray-300" data-i18n="nav_products">Products</a>
             <a href="aboutus.html" class="text-2xl font-bold text-gray-300" data-i18n="nav_about">About Us</a>
