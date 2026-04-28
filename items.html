@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DÜNYA INTERNATIONALE SUPERMARKT</title>
     
+    <link rel="icon" href="https://raw.githubusercontent.com/muntasir1023/Dunya/main/dunya%20logo.png" type="image/png">
+    <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/muntasir1023/Dunya/main/dunya%20logo.png">
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -198,11 +200,38 @@
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        #bulk-banner {
+        #premium-banner {
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        #bulk-banner:hover {
+        #premium-banner:hover {
             transform: scale(1.02) translateY(-5px);
+        }
+
+        /* Baklava Signature Highlight */
+        .baklava-special-pill {
+            background: linear-gradient(135deg, #b45309 0%, #d97706 100%) !important;
+            color: white !important;
+            border: 2px solid #fbbf24 !important;
+            box-shadow: 0 4px 15px rgba(180, 83, 9, 0.4) !important;
+            position: relative;
+            overflow: hidden;
+            font-weight: 700 !important;
+        }
+
+        .baklava-special-pill::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -150%;
+            width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transform: skewX(-20deg);
+            animation: signature-shimmer 5s infinite;
+        }
+
+        @keyframes signature-shimmer {
+            0% { left: -150%; }
+            20% { left: 150%; }
+            100% { left: 150%; }
         }
     </style>
 </head>
@@ -219,7 +248,7 @@
     <nav class="fixed w-full z-50 glass-nav">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <a href="index.html" class="flex items-center gap-3 py-1 group">
-                <i class="fa-solid fa-cart-shopping text-dunya-light text-xl md:text-2xl drop-shadow-sm"></i>
+                <img src="https://raw.githubusercontent.com/muntasir1023/Dunya/main/dunya%20logo.png" alt="Dunya Logo" width="64" height="64" fetchpriority="high" class="w-12 h-12 md:w-16 md:h-16 rounded-full object-cover border-2 border-dunya-light shadow-lg">
                 <div class="flex flex-col md:flex-row md:items-center text-[15px] md:text-lg lg:text-xl font-black tracking-tight" style="font-family: 'Franklin Gothic Heavy', 'Arial Black', sans-serif;">
                     <span class="text-dunya-light md:mr-4">DÜNYA</span>
                     <div class="flex items-center gap-2 md:gap-4 text-white">
@@ -324,7 +353,9 @@
             <button class="category-pill glass-panel px-6 py-2.5 rounded-full whitespace-nowrap text-sm font-medium" onclick="filterCategory(event, 'bakery')" data-i18n="cat_bakery">Bakery</button>
             <button class="category-pill glass-panel px-6 py-2.5 rounded-full whitespace-nowrap text-sm font-medium" onclick="filterCategory(event, 'dairy')" data-i18n="cat_dairy">Dairy & Cheese</button>
             <button class="category-pill glass-panel px-6 py-2.5 rounded-full whitespace-nowrap text-sm font-medium" onclick="filterCategory(event, 'grocery')" data-i18n="cat_grocery">Grocery</button>
-            <button class="category-pill glass-panel px-6 py-2.5 rounded-full whitespace-nowrap text-sm font-medium" onclick="filterCategory(event, 'baklava')" data-i18n="cat_baklava">Baklava</button>
+            <button class="category-pill glass-panel px-6 py-2.5 rounded-full whitespace-nowrap text-sm font-medium baklava-special-pill" onclick="filterCategory(event, 'baklava')" data-i18n="cat_baklava">
+                <i class="fa-solid fa-fire mr-1 text-yellow-300"></i>Baklava
+            </button>
         </div>
         <!-- Scroll Hint for Mobile -->
         <div class="flex justify-center mt-2 md:hidden">
@@ -343,17 +374,17 @@
         </div>
     </main>
 
-    <!-- Premium Bulk Service Section -->
-    <section class="pb-32 px-6 reveal" id="bulk-banner">
+    <!-- Premium Service Section -->
+    <section class="pb-32 px-6 reveal" id="premium-banner">
         <div class="max-w-4xl mx-auto">
             <div class="glass-panel p-8 md:p-12 rounded-[3rem] border-dunya-main/30 border shadow-2xl relative overflow-hidden text-center">
                 <div class="absolute -top-24 -right-24 w-48 h-48 bg-dunya-main/10 rounded-full blur-3xl"></div>
                 <div class="absolute -bottom-24 -left-24 w-48 h-48 bg-dunya-main/5 rounded-full blur-3xl"></div>
                 
                 <h4 class="text-dunya-light font-bold flex items-center justify-center gap-2 mb-6 text-sm uppercase tracking-widest">
-                    <i class="fa-solid fa-truck-fast"></i> Premium Bulk Service
+                    <i class="fa-solid fa-hand-holding-heart"></i> Premium Service
                 </h4>
-                <p class="text-lg md:text-xl text-gray-200 leading-relaxed mb-8 max-w-2xl mx-auto" data-i18n="bulk_service_desc">
+                <p class="text-lg md:text-xl text-gray-200 leading-relaxed mb-8 max-w-2xl mx-auto" data-i18n="premium_service_desc">
                     Ordering for <b>2+ weeks</b>? Avoid the search! WhatsApp your list to us. Just pick up and pay. <b>No advanced payment required.</b>
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4">
@@ -371,13 +402,17 @@
         <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
                 <div class="col-span-1 md:col-span-2">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="w-12 h-12 rounded-2xl bg-dunya-main flex items-center justify-center">
-                            <i class="fa-solid fa-basket-shopping text-white text-xl"></i>
+                    <a href="index.html" class="flex items-center gap-3 py-1 group mb-6">
+                        <i class="fa-solid fa-cart-shopping text-dunya-light text-xl md:text-2xl drop-shadow-sm"></i>
+                        <div class="flex flex-col md:flex-row md:items-center text-[15px] md:text-lg lg:text-xl font-black tracking-tight" style="font-family: 'Franklin Gothic Heavy', 'Arial Black', sans-serif;">
+                            <span class="text-dunya-light md:mr-4">DÜNYA</span>
+                            <div class="flex items-center gap-2 md:gap-4 text-white">
+                                <span>INTERNATI<i class="fa-solid fa-earth-americas text-blue-400 scale-90 mx-[1px]"></i>NALE</span>
+                                <span>SUPERMARKT</span>
+                            </div>
                         </div>
-                        <span class="text-2xl font-bold font-serif">Dunya Supermarket</span>
-                    </div>
-                    <p class="text-gray-400 mb-8 max-w-md" data-i18n="footer_desc">Bringing the flavors of the world to your doorstep since 1998. Your trusted partner for quality international groceries.</p>
+                    </a>
+                    <p class="text-gray-400 mb-8 max-w-md" data-i18n="footer_desc">Bringing the flavors of the world to our local community for the last 25 years. Your trusted partner for quality international groceries.</p>
                     <div class="flex gap-4">
                         <a href="#" class="w-10 h-10 rounded-full glass-panel flex items-center justify-center hover:bg-dunya-main transition"><i class="fa-brands fa-facebook-f"></i></a>
                         <a href="#" class="w-10 h-10 rounded-full glass-panel flex items-center justify-center hover:bg-dunya-main transition"><i class="fa-brands fa-instagram"></i></a>
@@ -394,7 +429,7 @@
                 </div>
                 <div>
                     <h4 class="font-serif font-bold mb-6 text-white" data-i18n="footer_contact">Location</h4>
-                    <p class="text-gray-400 text-sm mb-4">Stationsplein 45,<br>3013 AK Rotterdam</p>
+                    <p class="text-gray-400 text-sm mb-4">Couwenbergstraat 115,<br>6535 RX Nijmegen</p>
                     <p class="text-gray-400 text-sm">dunyahatert@hotmail.com</p>
                     <p class="text-dunya-light font-bold mt-2">024-3555339</p>
                 </div>
@@ -429,9 +464,9 @@
                 nav_home: "Home", nav_products: "Products", nav_about: "About Us",
                 page_title: "International Selection", page_subtitle: "Excellence in every aisle. Discover premium cuts, traditional bakes, and world-class spices.",
                 cat_all: "All Items", cat_meat: "Butcher", cat_bakery: "Bakery", cat_dairy: "Dairy & Cheese", cat_grocery: "Grocery", cat_baklava: "Baklava",
-                footer_desc: "Bringing the flavors of the world to your doorstep. Your trusted partner for quality groceries.",
-                footer_links: "Quick Links", footer_contact: "Location", footer_rights: "© 2024 Dunya Supermarket. All rights reserved.",
-                bulk_service_desc: "Ordering for 2+ weeks? Avoid the search! WhatsApp your list. Just pick up and pay. No advanced payment required.",
+                footer_desc: "Bringing the flavors of the world to our community for the last 25 years. Your trusted partner for quality groceries.",
+                footer_links: "Quick Links", footer_contact: "Location", footer_rights: "© 2026 DÜNYA INTERNATIONALE SUPERMARKT. All rights reserved.",
+                premium_service_desc: "Ordering for 2+ weeks? Avoid the search! WhatsApp your list. Just pick up and pay. No advanced payment required.",
                 search_placeholder: "Search products...", no_results: "No products found matching your search.",
                 cat_slide_hint: "Slide to see more categories"
             },
@@ -439,8 +474,8 @@
                 nav_home: "Startpagina", nav_products: "Producten", nav_about: "Over Ons",
                 page_title: "Internationale Selectie", page_subtitle: "Uitmuntendheid in elk gangpad. Ontdek kwaliteitsvlees en vers gebak.",
                 cat_all: "Alles", cat_meat: "Slagerij", cat_bakery: "Bakkerij", cat_dairy: "Zuivel", cat_grocery: "Supermarkt", cat_baklava: "Baklava",
-                footer_desc: "De smaken van de wereld bij u thuis. Uw partner voor kwaliteitsproducten.", footer_links: "Snelkoppelingen", footer_contact: "Locatie", footer_rights: "© 2026 DÜNYA INTERNATIONALE SUPERMARKT. Alle rechten voorbehouden.",
-                bulk_service_desc: "Boodschappen voor 2+ weken? Bestel via WhatsApp! Wij pakken het in, u haalt het op. Geen aanbetaling nodig.", // Added
+                footer_desc: "De smaken van de wereld in onze gemeenschap voor de afgelopen 25 jaar. Uw partner voor kwaliteitsproducten.", footer_links: "Snelkoppelingen", footer_contact: "Locatie", footer_rights: "© 2026 DÜNYA INTERNATIONALE SUPERMARKT. Alle rechten voorbehouden.",
+                premium_service_desc: "Boodschappen voor 2+ weken? Bestel via WhatsApp! Wij pakken het in, u haalt het op. Geen aanbetaling nodig.", // Added
                 search_placeholder: "Zoek producten...", // Added
                 no_results: "Geen producten gevonden die overeenkomen met uw zoekopdracht.", // Added
                 cat_slide_hint: "Scroll om meer te zien"
@@ -448,8 +483,8 @@
             tr: {
                 nav_home: "Anasayfa", nav_products: "Ürünler", nav_about: "Hakkımızda",
                 page_title: "Uluslararası Seçki", page_subtitle: "Her reyonumuzda mükemmellik. Taze etler ve geleneksel lezzetler.", cat_all: "Hepsi", cat_meat: "Kasap", cat_bakery: "Fırın", cat_dairy: "Şarküteri", cat_grocery: "Market", cat_baklava: "Baklava",
-                footer_desc: "Dünyanın lezzetlerini kapınıza getiriyoruz. Kaliteli alışverişteki güvenilir ortağınız.", footer_links: "Hızlı Linkler", footer_contact: "Konum", footer_rights: "© 2026 DÜNYA INTERNATIONALE SUPERMARKT. Tüm hakları saklıdır.",
-                bulk_service_desc: "2+ haftalık alışveriş mi? WhatsApp'tan listenizi atın, biz hazırlayalım. Kapıda ödeme, ön ödeme yok!", // Present, but ensuring consistency
+                footer_desc: "Dünya lezzetlerini son 25 yıldır mahallemize sunuyoruz. Kaliteli alışverişteki güvenilir ortağınız.", footer_links: "Hızlı Linkler", footer_contact: "Konum", footer_rights: "© 2026 DÜNYA INTERNATIONALE SUPERMARKT. Tüm hakları saklıdır.",
+                premium_service_desc: "2+ haftalık alışveriş mi? WhatsApp'tan listenizi atın, biz hazırlayalım. Kapıda ödeme, ön ödeme yok!", // Present, but ensuring consistency
                 search_placeholder: "Ürün ara...", // Added
                 no_results: "Aradığınız ürün bulunamadı.", // Added
                 cat_slide_hint: "Daha fazlası için kaydırın"
@@ -457,8 +492,8 @@
             ku: {
                 nav_home: "Sereke", nav_products: "Berhem", nav_about: "Derheqê Me",
                 page_title: "Berhemên Cîhanî", page_subtitle: "Di her beşê de kalîte. Goştê qenc û nanê taze li benda we ye.", cat_all: "Hemû", cat_meat: "Qesab", cat_bakery: "Nanpêjgeh", cat_dairy: "Şîr û Penêr", cat_grocery: "Bazar", cat_baklava: "Baklava",
-                footer_desc: "Tehmên dinyayê li ber deriyê we ne. Hevparê we yê bawerbar ji bo kalîteyê.", footer_links: "Lînkên Bilez", footer_contact: "Cîh", footer_rights: "© 2026 DÜNYA INTERNATIONALE SUPERMARKT. Maf parastî ne.",
-                bulk_service_desc: "Ji bo 2+ hefteyan kirîn? Bi WhatsAppê lîsteya xwe bişînin. Werin û bidin, pêşekî tune!", // Added
+                footer_desc: "Tehmên dinyayê ji bo civaka me ji bo 25 salên dawî. Hevparê we yê bawerbar ji bo kalîteyê.", footer_links: "Lînkên Bilez", footer_contact: "Cîh", footer_rights: "© 2026 DÜNYA INTERNATIONALE SUPERMARKT. Maf parastî ne.",
+                premium_service_desc: "Ji bo 2+ hefteyan kirîn? Bi WhatsAppê lîsteya xwe bişînin. Werin û bidin, pêşekî tune!", // Added
                 search_placeholder: "Berheman bigere...", // Added
                 no_results: "Tu berhem nehatin dîtin.", // Added
                 cat_slide_hint: "Ber bi alî ve bikişînin"
@@ -466,8 +501,8 @@
             es: {
                 nav_home: "Inicio", nav_products: "Productos", nav_about: "Nosotros",
                 page_title: "Selección Internacional", page_subtitle: "Excelencia en cada pasillo. Carnes de calidad y panadería artesana.", cat_all: "Todo", cat_meat: "Carnicería", cat_bakery: "Panadería", cat_dairy: "Lácteos", cat_grocery: "Abarrotes", cat_baklava: "Baklava",
-                footer_desc: "Sabores del mundo en su hogar. Calidad y confianza familiar.", footer_links: "Enlaces Rápidos", footer_contact: "Ubicación", footer_rights: "© 2026 DÜNYA INTERNATIONALE SUPERMARKT. Todos los derechos reservados.",
-                bulk_service_desc: "¿Compra para 2+ semanas? Pida por WhatsApp. Nosotros lo preparamos, usted solo paga al recoger. Sin adelantos.", // Added
+                footer_desc: "Sabores del mundo en nuestra comunidad por los últimos 25 años. Calidad y confianza familiar.", footer_links: "Enlaces Rápidos", footer_contact: "Ubicación", footer_rights: "© 2026 DÜNYA INTERNATIONALE SUPERMARKT. Todos los derechos reservados.",
+                premium_service_desc: "¿Compra para 2+ semanas? Pida por WhatsApp. Nosotros lo preparamos, usted solo paga al recoger. Sin adelantos.", // Added
                 search_placeholder: "Buscar productos...", // Added
                 no_results: "No se encontraron productos que coincidan con su búsqueda.", // Added
                 cat_slide_hint: "Desliza para ver más"
@@ -475,8 +510,8 @@
             ar: {
                 nav_home: "الرئيسية", nav_products: "المنتجات", nav_about: "من نحن",
                 page_title: "مجموعة عالمية", page_subtitle: "التميز في كل قسم. اكتشف أجود اللحوم والمخبوزات التقليدية.", cat_all: "الكل", cat_meat: "اللحوم", cat_bakery: "المخبوزات", cat_dairy: "الألبان", cat_grocery: "البقالة", cat_baklava: "بقلاوة",
-                footer_desc: "نأتي بنكهات العالم إلى باب منزلك. شريكك الموثوق للجودة.", footer_links: "روابط سريعة", footer_contact: "الموقع", footer_rights: "© 2026 DÜNYA INTERNATIONALE SUPERMARKT. جميع الحقوق محفوظة.",
-                bulk_service_desc: "طلب لـ اسبوعين أو أكثر؟ أرسل قائمتك عبر الواتساب. نجهزها لك وتدفع عند الاستلام. لا يشترط الدفع المسبق.", // Added
+                footer_desc: "نقدم نكهات العالم لمجتمعنا على مدار الـ 25 عاماً الماضية. شريكك الموثوق للجودة.", footer_links: "روابط سريعة", footer_contact: "الموقع", footer_rights: "© 2026 DÜNYA INTERNATIONALE SUPERMARKT. جميع الحقوق محفوظة.",
+                premium_service_desc: "طلب لـ اسبوعين أو أكثر؟ أرسل قائمتك عبر الواتساب. نجهزها لك وتدفع عند الاستلام. لا يشترط الدفع المسبق.", // Added
                 search_placeholder: "ابحث عن المنتجات...", // Added
                 no_results: "لم يتم العثور على منتجات مطابقة لبحثك.", // Added
                 cat_slide_hint: "اسحب لرؤية المزيد"
@@ -484,8 +519,8 @@
             fr: {
                 nav_home: "Accueil", nav_products: "Produits", nav_about: "À Propos",
                 page_title: "Sélection Internationale", page_subtitle: "L'excellence dans chaque rayon. Découvrez nos viandes et pains artisanaux.", cat_all: "Tout", cat_meat: "Boucherie", cat_bakery: "Boulangerie", cat_dairy: "Laitage", cat_grocery: "Épicerie", cat_baklava: "Baklava",
-                footer_desc: "Les saveurs du monde à votre porte. Votre partenaire de confiance.", footer_links: "Liens Rapides", footer_contact: "Localisation", footer_rights: "© 2026 DÜNYA INTERNATIONALE SUPERMARKT. Tous droits réservés.",
-                bulk_service_desc: "Courses pour 2+ semaines? Commandez via WhatsApp! On prépare tout, vous payez au retrait. Aucun acompte requis.",
+                footer_desc: "Les saveurs du monde pour notre communauté depuis 25 ans. Votre partenaire de confiance.", footer_links: "Liens Rapides", footer_contact: "Localisation", footer_rights: "© 2026 DÜNYA INTERNATIONALE SUPERMARKT. Tous droits réservés.",
+                premium_service_desc: "Courses pour 2+ semaines? Commandez via WhatsApp! On prépare tout, vous payez au retrait. Aucun acompte requis.",
                 search_placeholder: "Rechercher des produits...",
                 no_results: "Aucun produit trouvé correspondant à votre recherche.",
                 cat_slide_hint: "Glissez pour en voir plus"
@@ -493,8 +528,8 @@
             zz: {
                 nav_home: "Keye", nav_products: "Malun", nav_about: "Ma ser",
                 page_title: "Sûka Dinya", page_subtitle: "Her ca de kalîte. Goştê weş û nanê taze dermanê şıma yo.", cat_all: "Pêro", cat_meat: "Qesab", cat_bakery: "Fırın", cat_dairy: "Şıt û Penir", cat_grocery: "Markete", cat_baklava: "Baklava",
-                footer_desc: "Tehmê dinya kapiyê şıma de yo. İtibarê şıma yo herdemi.", footer_links: "Lînkê Leze", footer_contact: "Ca", footer_rights: "© 2026 DÜNYA INTERNATIONALE SUPERMARKT. Heqî amê pawıtene.",
-                bulk_service_desc: "2+ heftan rê market? WhatsApp ra bınusên. Ma amade kenîme, şıma teyna bıpayerê. Verpê dînayîş çînyo.", // Added
+                footer_desc: "25 serra peyêne de tehmê dinya ma de estê. İtibarê şıma yo herdemi.", footer_links: "Lînkê Leze", footer_contact: "Ca", footer_rights: "© 2026 DÜNYA INTERNATIONALE SUPERMARKT. Heqî amê pawıtene.",
+                premium_service_desc: "2+ heftan rê market? WhatsApp ra bınusên. Ma amade kenîme, şıma teyna bıpayerê. Verpê dînayîş çînyo.", // Added
                 search_placeholder: "Berheman biger...", // Added
                 no_results: "Cîyayîşê şıma rê çîyêk nêame dîtin.", // Added
                 cat_slide_hint: "Kategoriyê bîn bınesnê"
@@ -521,8 +556,8 @@
             { name: "Pistachio Baklava", cat: "baklava", img: "https://images.unsplash.com/photo-1519676867240-f03562e64548?q=80&w=800&auto=format&fit=crop" },
             { name: "Walnut Baklava", cat: "baklava", img: "https://images.unsplash.com/photo-1589620588698-c11cc28f6454?q=80&w=800&auto=format&fit=crop" },
             { name: "Cashew Baklava", cat: "baklava", img: "https://images.unsplash.com/photo-1632149106681-a056036f52e7?q=80&w=800&auto=format&fit=crop" },
-            { name: "Mixed Nut Baklava", cat: "baklava", img: "https://images.unsplash.com/photo-1568162603664-fcd658421851?q=80&w=800&auto=format&fit=crop" },
-            { name: "Chocolate Baklava", cat: "baklava", img: "https://images.unsplash.com/photo-1605460375648-278bcbd579a6?q=80&w=800&auto=format&fit=crop" },
+            { name: "Mixed Nut Baklava", cat: "baklava", img: " ?q=80&w=800&auto=format&fit=crop" },
+            { name: "Chocolate Baklava", cat: "baklava", img: " ?q=80&w=800&auto=format&fit=crop" },
             { name: "Shredded Kadayif", cat: "baklava", img: "https://images.unsplash.com/photo-1514517220017-8ce97a34a7b6?q=80&w=800&auto=format&fit=crop" },
             { name: "Rolled Sarma Baklava", cat: "baklava", img: "https://images.unsplash.com/photo-1599743108618-717f5d4741b8?q=80&w=800&auto=format&fit=crop" },
             { name: "Burma Baklava", cat: "baklava", img: "https://images.unsplash.com/photo-1534513997188-0239e40a4445?q=80&w=800&auto=format&fit=crop" },
